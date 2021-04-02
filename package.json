@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@prezly/sdk": "^2.5.1",
-    "@prezly/slate-renderer": "0.1.0-alpha.39",
+    "@prezly/slate-renderer": "^0.1.1",
     "globby": "^11.0.3",
     "next": "^10.1.2",
     "react": "^17.0.1",
