@@ -1,5 +1,5 @@
-import { getPrezlyApi } from '@/utils/prezly';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { getPrezlyApi } from '@/utils/prezly';
 
 export default async function fetchStories(req: NextApiRequest, res: NextApiResponse) {
     if (req.method !== 'POST') {
@@ -18,9 +18,11 @@ export default async function fetchStories(req: NextApiRequest, res: NextApiResp
         );
 
         res.status(200).json({ stories });
-    } catch (err) {
-        res.status(500).send({
-            message: err.message,
-        });
+    } catch (error) {
+        if (error instanceof Error) {
+            res.status(500).send({
+                message: error.message,
+            });
+        }
     }
 }
