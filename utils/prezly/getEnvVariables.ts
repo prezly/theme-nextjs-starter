@@ -1,5 +1,5 @@
 import type { IncomingMessage } from 'http';
-import type { Env } from '../../types';
+import type { Env } from 'types';
 
 const getEnvVariables = (req?: IncomingMessage): Env => {
     if (process.browser) {
@@ -17,6 +17,7 @@ const getEnvVariables = (req?: IncomingMessage): Env => {
         }
     }
 
+    // @ts-ignore
     return { ...process.env };
 };
 
