@@ -1,0 +1,1 @@
+export { PaginatedStories } from './PaginatedStories';

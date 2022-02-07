@@ -1,0 +1,1 @@
+export { StorySeo } from './StorySeo';

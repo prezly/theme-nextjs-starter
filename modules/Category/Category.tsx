@@ -1,21 +1,37 @@
-import { Category } from '@prezly/sdk/dist/types';
-import Link from 'next/link';
+import type { Story } from '@prezly/sdk';
+import { useCurrentCategory } from '@prezly/theme-kit-nextjs';
+import React from 'react';
 
-type Props = {
-    category: Category;
-};
+import { Layout } from '@/modules/Layout';
+import type { PaginationProps } from 'types';
 
-const CategoryComponent = ({ category }: Props) => {
-    // Use first available locale with a slug
-    // Change this for multilang support
-    const locales = Object.keys(category.i18n);
-    const locale = locales.find((localeCode) => !!category.i18n[localeCode].slug) || locales[0];
+// import { InfiniteStories } from '../InfiniteStories';
+import { PaginatedStories } from '../PaginatedStories';
+
+interface Props {
+    pagination: PaginationProps;
+    stories: Story[];
+}
+
+export function Category({ pagination, stories }: Props) {
+    const currentCategory = useCurrentCategory();
+    if (!currentCategory) {
+        return null;
+    }
 
     return (
-        <Link href={`/category/${category.i18n[locale].slug}`}>
-            <a>{category.display_name}</a>
-        </Link>
-    );
-};
+        <Layout>
+            <h1>{currentCategory.display_name}</h1>
+            <p>{currentCategory.display_description}</p>
 
-export default CategoryComponent;
+            {/* You can switch to infinite loading by uncommenting the `InfiniteStories` component below
+            and removing the `PaginatedStories` component. */}
+            <PaginatedStories stories={stories} pagination={pagination} />
+            {/* <InfiniteStories
+                initialStories={stories}
+                pagination={pagination}
+                category={currentCategory}
+            /> */}
+        </Layout>
+    );
+}

@@ -1,65 +1,31 @@
-import type { FunctionComponent } from 'react';
 import type { Story } from '@prezly/sdk';
-import { GetServerSideProps } from 'next';
-import { Category } from '@prezly/sdk/dist/types';
-import { BasePageProps, PaginationProps } from 'types';
-import { getPrezlyApi } from '@/utils/prezly';
-import Layout from '@/components/Layout';
-import { PaginatedStories } from '@/modules/Stories';
-import { PageSeo } from '@/components/seo';
-import getAssetsUrl from '@/utils/prezly/getAssetsUrl';
-import { NewsroomContextProvider } from '@/contexts/newsroom';
-import { DEFAULT_PAGE_SIZE } from '@/utils/prezly/constants';
+import {
+    DEFAULT_PAGE_SIZE,
+    getNewsroomServerSideProps,
+    processRequest,
+} from '@prezly/theme-kit-nextjs';
+import type { GetServerSideProps } from 'next';
+import dynamic from 'next/dynamic';
+
+import { importMessages } from '@/utils';
+import type { BasePageProps, PaginationProps } from 'types';
 
 interface Props extends BasePageProps {
     stories: Story[];
-    category: Category;
-    slug: string;
     pagination: PaginationProps;
 }
 
-const IndexPage: FunctionComponent<Props> = ({
-    category,
-    stories,
-    categories,
-    slug,
-    newsroom,
-    companyInformation,
-    pagination,
-}) => (
-    <NewsroomContextProvider
-        categories={categories}
-        newsroom={newsroom}
-        companyInformation={companyInformation}
-    >
-        <PageSeo
-            title={category.display_name}
-            description={category.display_description as string}
-            url={`${newsroom.url}/category/${slug}`}
-            imageUrl={getAssetsUrl(newsroom.newsroom_logo?.uuid as string)}
-        />
-        <Layout>
-            <h1>{category.display_name}</h1>
-            <p>{category.display_description}</p>
+const Category = dynamic(() => import('@/modules/Category'), { ssr: true });
 
-            {/* You can switch to infinite loading by uncommenting the `InfiniteStories` component below
-            and removing the `PaginatedStories` component. */}
-            <PaginatedStories stories={stories} pagination={pagination} />
-            {/* <InfiniteStories initialStories={stories} pagination={pagination} category={category} /> */}
-        </Layout>
-    </NewsroomContextProvider>
-);
+function CategoryPage({ stories, pagination }: Props) {
+    return <Category stories={stories} pagination={pagination} />;
+}
 
 export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
-    const api = getPrezlyApi(context.req);
-    const { slug } = context.params as { slug: string };
+    const { api, serverSideProps } = await getNewsroomServerSideProps(context);
 
-    const [categories, category, newsroom, companyInformation] = await Promise.all([
-        api.getCategories(),
-        api.getCategoryBySlug(slug),
-        api.getNewsroom(),
-        api.getCompanyInformation(),
-    ]);
+    const { slug } = context.params as { slug: string };
+    const category = await api.getCategoryBySlug(slug);
 
     if (!category) {
         return {
@@ -67,27 +33,35 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
         };
     }
 
-    const page = context.query.page && typeof context.query.page === 'string'
-        ? Number(context.query.page)
-        : undefined;
+    const page =
+        context.query.page && typeof context.query.page === 'string'
+            ? Number(context.query.page)
+            : undefined;
 
-    const { stories, storiesTotal } = await api.getStoriesFromCategory(category, { page });
+    const { localeCode } = serverSideProps.newsroomContextProps;
+    const { stories, storiesTotal } = await api.getStoriesFromCategory(category, {
+        page,
+        localeCode,
+    });
 
-    return {
-        props: {
+    return processRequest(
+        context,
+        {
+            ...serverSideProps,
+            newsroomContextProps: {
+                ...serverSideProps.newsroomContextProps,
+                currentCategory: category,
+            },
             stories,
-            category,
-            categories,
-            newsroom,
-            slug,
-            companyInformation,
             pagination: {
                 itemsTotal: storiesTotal,
                 currentPage: page ?? 1,
                 pageSize: DEFAULT_PAGE_SIZE,
             },
+            translations: await importMessages(localeCode),
         },
-    };
+        `/category/${slug}`,
+    );
 };
 
-export default IndexPage;
+export default CategoryPage;

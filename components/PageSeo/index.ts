@@ -1,0 +1,1 @@
+export { PageSeo } from './PageSeo';

@@ -1,31 +1,30 @@
-import type { ExtendedStory } from '@prezly/sdk/dist/types';
-import { GetServerSideProps, NextPage } from 'next';
-import { BasePageProps } from 'types';
-import { getPrezlyApi } from '@/utils/prezly';
-import Story from '@/modules/Story';
-import Layout from '@/components/Layout';
-import { NewsroomContextProvider } from '@/contexts/newsroom';
+import {
+    DUMMY_DEFAULT_LOCALE,
+    getNewsroomServerSideProps,
+    getPrezlyApi,
+    processRequest,
+    useCurrentStory,
+} from '@prezly/theme-kit-nextjs';
+import type { GetServerSideProps } from 'next';
+import dynamic from 'next/dynamic';
 
-interface Props extends BasePageProps {
-    story: ExtendedStory;
+import { importMessages } from '@/utils';
+
+const Story = dynamic(() => import('@/modules/Story'), { ssr: true });
+
+function StoryPage() {
+    const currentStory = useCurrentStory();
+
+    if (!currentStory) {
+        return null;
+    }
+
+    return <Story story={currentStory} />;
 }
-
-const StoryPage: NextPage<Props> = ({
-    story, categories, newsroom, companyInformation,
-}) => (
-    <NewsroomContextProvider
-        categories={categories}
-        newsroom={newsroom}
-        companyInformation={companyInformation}
-    >
-        <Layout>
-            <Story story={story} />
-        </Layout>
-    </NewsroomContextProvider>
-);
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const api = getPrezlyApi(context.req);
+
     const { slug } = context.params as { slug?: string };
     const story = slug ? await api.getStoryBySlug(slug) : null;
 
@@ -33,20 +32,28 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         return { notFound: true };
     }
 
-    const [categories, newsroom, companyInformation] = await Promise.all([
-        api.getCategories(),
-        api.getNewsroom(),
-        api.getCompanyInformation(),
-    ]);
+    // We are passing the story object to detect locale from the story itself
+    // since the locale code is not part of the URL (e.g. /my-story).
+    const { serverSideProps } = await getNewsroomServerSideProps(context, { story });
 
-    return {
-        props: {
-            story,
-            categories,
-            newsroom,
-            companyInformation,
+    const { locale } = context;
+    if (locale && locale !== DUMMY_DEFAULT_LOCALE) {
+        return {
+            redirect: {
+                destination: `/${slug}`,
+                permanent: true,
+            },
+        };
+    }
+
+    return processRequest(context, {
+        ...serverSideProps,
+        newsroomContextProps: {
+            ...serverSideProps.newsroomContextProps,
+            currentStory: story,
         },
-    };
+        translations: await importMessages(serverSideProps.newsroomContextProps.localeCode),
+    });
 };
 
 export default StoryPage;

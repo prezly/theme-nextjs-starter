@@ -1,2 +1,3 @@
-export { default as PaginatedStories } from './PaginatedStories';
-export { default as InfiniteStories } from './InfiniteStories';
+import { Stories } from './Stories';
+
+export default Stories;
