@@ -1,7 +1,7 @@
 /**
- * We need to fetch some data in order to show a layout for 404 page.
- * That is why generic component was created, because neither `getServerSideProps`
- * nor `getInitialProps` are supported by Next.js for 404.txt and 500.tsx pages.
+ * We rely on `newsroomContextProps` being defined in both _document.tsx and _app.tsx.
+ * This is handy if you want to show a custom error page (e.g. 404) while also rendering
+ * other components, e.g. header and/or footer with proper translations.
  */
 
 import type { PageProps } from '@prezly/theme-kit-nextjs';
