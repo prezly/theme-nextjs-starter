@@ -1,6 +1,7 @@
 import {
     getCategoryUrl,
     getLocalizedCategoryData,
+    useAlgoliaSettings,
     useCategories,
     useCurrentLocale,
     useGetLinkLocaleSlug,
@@ -13,6 +14,7 @@ export function Header() {
     const categories = useCategories();
     const currentLocale = useCurrentLocale();
     const getLinkLocaleSlug = useGetLinkLocaleSlug();
+    const { ALGOLIA_API_KEY } = useAlgoliaSettings();
 
     return (
         <header>
@@ -40,6 +42,15 @@ export function Header() {
                         </a>
                     </Link>
                 </li>
+                {ALGOLIA_API_KEY && (
+                    <li>
+                        <Link href="/search" passHref>
+                            <a>
+                                <FormattedMessage {...translations.search.title} />
+                            </a>
+                        </Link>
+                    </li>
+                )}
             </ul>
         </header>
     );
