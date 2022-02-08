@@ -5,7 +5,9 @@ import {
     useCurrentLocale,
     useGetLinkLocaleSlug,
 } from '@prezly/theme-kit-nextjs';
+import translations from '@prezly/themes-intl-messages';
 import Link from 'next/link';
+import { FormattedMessage } from 'react-intl';
 
 export function Header() {
     const categories = useCategories();
@@ -31,6 +33,13 @@ export function Header() {
                         </Link>
                     </li>
                 ))}
+                <li>
+                    <Link href="/media" passHref>
+                        <a>
+                            <FormattedMessage {...translations.mediaGallery.title} />
+                        </a>
+                    </Link>
+                </li>
             </ul>
         </header>
     );
