@@ -2,6 +2,7 @@ import type { ExtendedStory } from '@prezly/sdk';
 import { StoryFormatVersion } from '@prezly/sdk';
 
 import { SlateRenderer, StorySeo } from '@/components';
+import { Layout } from '@/modules/Layout';
 
 interface Props {
     story: ExtendedStory;
@@ -11,7 +12,7 @@ export function Story({ story }: Props) {
     const { title, subtitle, content, format_version } = story;
 
     return (
-        <>
+        <Layout>
             <StorySeo story={story} />
             <article>
                 <h2>{title}</h2>
@@ -23,6 +24,6 @@ export function Story({ story }: Props) {
                     <SlateRenderer nodes={JSON.parse(content)} />
                 )}
             </article>
-        </>
+        </Layout>
     );
 }
