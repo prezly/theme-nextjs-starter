@@ -5,11 +5,11 @@ import Document, { Head, Html, Main, NextScript } from 'next/document';
 class MyDocument extends Document {
     render() {
         const {
-            newsroomContextProps,
+            newsroomContextProps: { localeCode = DEFAULT_LOCALE },
             // eslint-disable-next-line no-underscore-dangle
-        } = this.props.__NEXT_DATA__.props.pageProps as Partial<PageProps>;
+        } = this.props.__NEXT_DATA__.props.pageProps as PageProps;
 
-        const locale = LocaleObject.fromAnyCode(newsroomContextProps?.localeCode ?? DEFAULT_LOCALE);
+        const locale = LocaleObject.fromAnyCode(localeCode);
         const direction = getLocaleDirection(locale);
 
         return (
