@@ -60,12 +60,8 @@ export function Search() {
                 <AlgoliaStateContextProvider>
                     <Title />
                     <div style={{ display: 'flex ' }}>
-                        <div>
-                            <Sidebar />
-                        </div>
-                        <div>
-                            <Results />
-                        </div>
+                        <Sidebar />
+                        <Results />
                     </div>
                 </AlgoliaStateContextProvider>
             </InstantSearch>
