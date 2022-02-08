@@ -21,6 +21,7 @@ import type { AlternateLanguageLink } from 'types';
 
 import { Footer } from './Footer';
 import { Header } from './Header';
+import { SubscribeForm } from './SubscribeForm';
 
 interface Props {
     description?: string;
@@ -89,7 +90,7 @@ export function Layout({ children, description, imageUrl, title }: PropsWithChil
             />
             <Header />
             <main>{children}</main>
-            {/* <SubscribeForm /> */}
+            <SubscribeForm />
             <Footer />
         </>
     );
