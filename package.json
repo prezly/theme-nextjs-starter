@@ -9,9 +9,12 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "typecheck": "tsc --noEmit",
+    "check": "npm run lint && npm run prettier && npm run typecheck",
     "lint": "eslint . --ext .ts,.tsx",
-    "lint:fix": "eslint . --ext .ts,.tsx --fix"
+    "lint:fix": "eslint . --ext .ts,.tsx --fix",
+    "prettier": "prettier --check './**/*.(js|ts|tsx)'",
+    "prettier:fix": "npm run prettier -- --write --no-list-different",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@prezly/content-renderer-react-js": "0.10.2",
@@ -39,6 +42,7 @@
     "@types/react-dom": "^17.0.1",
     "@types/react-instantsearch-dom": "^6.12.2",
     "next-logger": "^3.0.0",
+    "prettier": "^2.5.1",
     "typescript": "^4.5.5"
   },
   "license": "GNU GPL v3"
