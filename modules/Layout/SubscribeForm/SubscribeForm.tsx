@@ -1,23 +1,16 @@
-import HCaptcha from '@hcaptcha/react-hcaptcha';
 import { getPrivacyPortalUrl, useCurrentLocale, useNewsroom } from '@prezly/theme-kit-nextjs';
 import translations from '@prezly/themes-intl-messages';
 import type { FormEvent } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { getLocaleCodeForCaptcha, validateEmail } from './utils';
-
-// eslint-disable-next-line prefer-destructuring
-const NEXT_PUBLIC_HCAPTCHA_SITEKEY = process.env.NEXT_PUBLIC_HCAPTCHA_SITEKEY;
+import { validateEmail } from './utils';
 
 export function SubscribeForm() {
     const newsroom = useNewsroom();
     const currentLocale = useCurrentLocale();
     const { formatMessage } = useIntl();
 
-    const captchaRef = useRef<HCaptcha>(null);
-
-    const [captchaToken, setCaptchaToken] = useState<string>();
     const [email, setEmail] = useState<string>('');
     const [emailError, setEmailError] = useState<string>();
 
@@ -29,18 +22,9 @@ export function SubscribeForm() {
                 event.preventDefault();
             }
 
-            if (!captchaRef.current) {
-                throw new Error(formatMessage(translations.errors.unknown));
-            }
-
             const errorMessageDescriptor = validateEmail(email);
             if (errorMessageDescriptor) {
                 throw new Error(formatMessage(errorMessageDescriptor));
-            }
-
-            if (!captchaToken) {
-                captchaRef.current.execute();
-                return;
             }
 
             window.location.href = getPrivacyPortalUrl(newsroom, currentLocale, { email });
@@ -49,11 +33,6 @@ export function SubscribeForm() {
                 setEmailError(error.message);
             }
         }
-    }
-
-    function handleCaptchaVerify(token: string) {
-        setCaptchaToken(token);
-        handleSubmit();
     }
 
     // Clear the error when user types in a correct value
@@ -119,17 +98,6 @@ export function SubscribeForm() {
                         }}
                     />
                 </p>
-
-                {NEXT_PUBLIC_HCAPTCHA_SITEKEY && (
-                    <HCaptcha
-                        sitekey={NEXT_PUBLIC_HCAPTCHA_SITEKEY}
-                        size="invisible"
-                        ref={captchaRef}
-                        onVerify={handleCaptchaVerify}
-                        onExpire={() => setCaptchaToken(undefined)}
-                        languageOverride={getLocaleCodeForCaptcha(currentLocale)}
-                    />
-                )}
             </form>
         </div>
     );
