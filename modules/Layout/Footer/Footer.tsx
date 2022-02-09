@@ -1,4 +1,6 @@
 import { LocaleObject, useCompanyInformation, useLanguages } from '@prezly/theme-kit-nextjs';
+import translations from '@prezly/themes-intl-messages';
+import { FormattedMessage } from 'react-intl';
 
 export function Footer() {
     const languages = useLanguages();
@@ -7,7 +9,12 @@ export function Footer() {
     return (
         <footer>
             <h2>
-                <>About</> {companyInformation.name}
+                <FormattedMessage
+                    {...translations.boilerplate.title}
+                    values={{
+                        companyName: companyInformation.name,
+                    }}
+                />
             </h2>
 
             <div dangerouslySetInnerHTML={{ __html: companyInformation.about }} />
@@ -16,7 +23,7 @@ export function Footer() {
 
             {languages.length > 0 && (
                 <>
-                    <h2>Languages</h2>
+                    <hr />
                     {languages.map((language) => (
                         <li key={language.code}>
                             <a href={`/${LocaleObject.fromAnyCode(language.code).toUrlSlug()}`}>

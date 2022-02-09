@@ -24,17 +24,22 @@ export function Header() {
                         <a>Home</a>
                     </Link>
                 </li>
-                {categories.map((category) => (
-                    <li key={category.id}>
-                        <Link
-                            href={getCategoryUrl(category, currentLocale)}
-                            locale={getLinkLocaleSlug()}
-                            passHref
-                        >
-                            <a>{getLocalizedCategoryData(category, currentLocale).name}</a>
-                        </Link>
-                    </li>
-                ))}
+                <li>
+                    <FormattedMessage {...translations.categories.title} />
+                    <ul>
+                        {categories.map((category) => (
+                            <li key={category.id}>
+                                <Link
+                                    href={getCategoryUrl(category, currentLocale)}
+                                    locale={getLinkLocaleSlug()}
+                                    passHref
+                                >
+                                    <a>{getLocalizedCategoryData(category, currentLocale).name}</a>
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
+                </li>
                 <li>
                     <Link href="/media" passHref>
                         <a>
