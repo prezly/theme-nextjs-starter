@@ -35,7 +35,7 @@
     "string-strip-html": "^9.1.6"
   },
   "devDependencies": {
-    "@prezly/eslint-config": "4.0.0",
+    "@prezly/eslint-config": "4.1.0",
     "@types/node": "^16.10.2",
     "@types/parse-data-url": "^3.0.0",
     "@types/react": "^17.0.4",
