@@ -1,38 +1,29 @@
-import type { FunctionComponent } from 'react';
-import type { ExtendedStory } from '@prezly/sdk/dist/types';
-import SlateRenderer from 'components/SlateRenderer';
-import { FormatVersion } from '@prezly/sdk/dist/types/Story';
-import { StorySeo } from '@/components/seo';
+import type { ExtendedStory } from '@prezly/sdk';
+import { StoryFormatVersion } from '@prezly/sdk';
 
-type Props = {
+import { SlateRenderer, StorySeo } from '@/components';
+import { Layout } from '@/modules/Layout';
+
+interface Props {
     story: ExtendedStory;
-};
+}
 
-const Story: FunctionComponent<Props> = ({ story }) => {
-    if (!story) {
-        return null;
-    }
-
-    const {
-        title, subtitle, content, format_version,
-    } = story;
+export function Story({ story }: Props) {
+    const { title, subtitle, content, format_version } = story;
 
     return (
-        <>
+        <Layout>
             <StorySeo story={story} />
             <article>
                 <h2>{title}</h2>
                 <h3>{subtitle}</h3>
-                {format_version === FormatVersion.HTML && (
-                    // eslint-disable-next-line react/no-danger
+                {format_version === StoryFormatVersion.HTML && (
                     <div dangerouslySetInnerHTML={{ __html: content }} />
                 )}
-                {format_version === FormatVersion.SLATEJS && (
-                    <SlateRenderer nodes={JSON.parse(content as string)} />
+                {format_version === StoryFormatVersion.SLATEJS && (
+                    <SlateRenderer nodes={JSON.parse(content)} />
                 )}
             </article>
-        </>
+        </Layout>
     );
-};
-
-export default Story;
+}
