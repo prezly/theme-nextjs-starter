@@ -1,12 +1,12 @@
 import type { Category, Story } from '@prezly/sdk';
 import { getPrezlyApi } from '@prezly/theme-kit-nextjs';
-import type { NextPage, NextPageContext } from 'next';
+import type { NextPageContext } from 'next';
 
-type Url = {
+interface Url {
     loc: string;
     changefreq?: string;
     priority?: string;
-};
+}
 
 class SitemapBuilder {
     private baseUrl: string;
@@ -63,7 +63,7 @@ class SitemapBuilder {
     }
 }
 
-const createPaths = (stories: Story[], categories: Category[]) => {
+function createPaths(stories: Story[], categories: Category[]) {
     const storiesUrls = stories.map(({ slug }) => `/${slug}`);
     const categoriesUrls = categories
         .map((category) => {
@@ -81,9 +81,11 @@ const createPaths = (stories: Story[], categories: Category[]) => {
         .flat();
 
     return [...storiesUrls, ...categoriesUrls];
-};
+}
 
-const Sitemap: NextPage = () => null;
+function Sitemap() {
+    return null;
+}
 
 Sitemap.getInitialProps = async (ctx: NextPageContext) => {
     const { res, req } = ctx;
