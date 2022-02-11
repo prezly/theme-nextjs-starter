@@ -1,33 +1,42 @@
-# Prezly Theme Starter Kit
+# Prezly Theme Starter
 
-Prezly Theme starter kit for your newsroom or blog based on Next.js 10+ framework. Made with [Next.js](https://nextjs.org), [PrezlySDK](https://github.com/prezly/javascript-sdk), [TypeScript](https://www.typescriptlang.org), [ESLint](https://eslint.org) and [Slate Renderer](https://www.npmjs.com/package/@prezly/slate-renderer).
+Prezly Theme starter for your newsroom or blog based on Next.js 12+ framework:
 
+- Made with [TypeScript], [Prezly SDK] and [Prezly Content React Renderer].
+- Data-fetching is handled by [Next.js Theme Kit] and [Prezly SDK].
+- Multi-language is powered by [React Intl] and [Prezly Themes Translations].
+- Code-style is ensured by [ESLint] and [Prettier].
+- Search is powered by [Algolia]
 
-As we do not want to tell you how to style your project (CSS vs Sas vs CSS-in-JS vs styled components) and sure as hell do not want to force you on our preferred CSS framework **this theme does not have any styling loaded**. It is intended to be used as a boilerplate to start a new theme from.
+As we do not want to tell you how to style your project (CSS vs Sass vs CSS-in-JS vs styled components) and sure as hell do not want to force you on our preferred CSS framework **this theme does not have any styling loaded**. It is intended to be used as a boilerplate to start a new theme from.
 
 ## Features
 
 ### Content/Newsroom features
 
-* 🎈 Homepage with list of articles
-* 🤖 Sitemap.xml, SEO metadata and Open Graph Tags
-* 📖 Article detail including images, galleries, cards and video
-* 💯 Maximize lighthouse score
+* Homepage with list of stories
+* Story page including images, galleries, cards and video using our [Prezly Content React Renderer]
+* Category page with list of stories based on the selected category
+* Galleries page with list of galleries
+* Gallery page using our [Prezly Content React Renderer]
+* i18n support for 40+ languages
+* sitemap.xml, SEO metadata and Open Graph Tags
+* Maximize lighthouse score
 
 ### Developer experience:
 
-* 🔥 [Next.js](https://nextjs.org) with SSR, SSI or SSG option
-* 🧪 Test/Seed data in 3 categories
-* 🎉 Type checking [TypeScript](https://www.typescriptlang.org)
-* 🎨 Strongly typed content/entities
+* [Next.js] with SSR, SSG or ISR option
+* Test/Seed data in 3 categories
+* Type checking with [TypeScript]
+* Strongly typed content/entities
 
-### Built-in feature from Next.js:
+### Built-in features from Next.js:
 
-* ☕ Minify HTML & CSS
-* 💨 Live reload/Fast refresh
-* ✅ Code splitting and bundling
-* ☯ Hybrid: SSG, SSI or SSR
-* 🌄 Image optimization
+* Minify HTML & CSS
+* Live reload/Fast refresh
+* Code splitting and bundling
+* Hybrid: SSR, SSG or ISR
+* Image optimization
 
 ### Requirements
 
@@ -73,14 +82,18 @@ Deploy the example using [Vercel](https://vercel.com) or [Netlify](https://www.n
 
 List of routes we automatically generate:
 
-* **/** : Index page listing stories
-* **/[article_slug]** : Article pages with slug provided by PrezlySDK
-* **/category/[category:slug]** : Category page listing articles in respective category
+* **/** : Homepage listing stories
+* **/[slug]** : Story page with slug provided by [Prezly SDK]
+* **/s/[uuid]**: Story preview page used for previewing non-published stories
+* **/category/[slug]** : Category page listing stories in respective category
+* **/media**: Galleries page with infinite loading
+* **/media/album/[uuid]**: Gallery page
+* **/search**: Search page using realtime search with [Algolia]
 * **/sitemap.xml**: Sitemap
 
 ### Testing/Token
 
-To ease with development we have created a few sample newsrooms in different categories:
+To make development and testing easier we have created a few sample newsrooms:
 
 * **The Good Newsroom** [(preview on vercel)](https://theme-nextjs-starter-the-good-newsroom.vercel.app/): A newsroom filled with good news
 * **Cookbook** [(preview on vercel)](https://theme-nextjs-starter-cookbook.vercel.app/): Recipes shared by the Prezly team
@@ -94,27 +107,37 @@ A list of tokens/newsroom uuids that can be used to kickstart the theme.
 | Cookbook  | `TKcab_nEbab_28432b75d3a85a826e51cd0b502a3d76acf98d19`  | `9d90b2c1-aed9-4415-a9fb-82dd3a2a1b52` |
 | Anonymous Photographer | `SKcab_nEbab_0b63a6dd0b09286cc99fab93e6e80bfd9aecfbb5`  | `ce8299f6-a293-41df-8ffc-1c064d4401bc` |
 
+### Accessing common data
+
+The entire application is wrapped with `NewsroomContextProvider` and `IntlProvider` from [Next.js Theme Kit]
+making it easy to access common objects like `newsroom`, `companyInformation`, `categories`, `languages`, `locale`
+anywhere in the component tree.
+
+For more information about these hooks please visit our [Next.js Theme Kit].
+
 ### Hooks
 
-Each route (index, category, and story) is wrapped on a `React.Context` to make it easier to get values from the newsroom with a simple hook.
+#### `useInfiniteLoading()`
 
-#### Available hooks
+Generic hook for continuous loading of any dataset keeping track of current page internally. An example implementation
+for continuous loading of galleries can be found in the [`Galleries`](./tree/main/modules/Galleries/lib/useInfiniteGalleriesLoading.ts) module.
 
-Under [`hooks/`](./tree/master/hooks):
+### Modules
 
-* `useNewsroom()`: Get Newsroom object.
-* `useCategories()`: Get all categories from newsroom.
-* `useSelectedCategory()`: On a category page, gets the current category.
-* `useCompanyInformation()`: Used to get information about the company, like the `about` text, social links, etc.
+#### `Layout`
 
-## Other
+This module takes care of rendering header and footer components as well as the subscribe form.
+It also uses `PageSeo` component to render all the necessary meta tags with optional props to override
+certain meta tag content like title (`og:title`), description (`og:description`) and image (`og:image`, `twitter:image`).
 
-[`@/modules/Stories`](./tree/master/modules/Stories/index.ts) module exports two variants of stories list pagination:
+#### `PaginatedStories`
 
-* `PaginatedStories`: Classic query-parameter-based pagination, used in the starter by default
-* `InfiniteStories`: Infinite loading of stories with `Load More` button
+Classic query-parameter-based pagination, used in the starter theme by default in [`Stories`](./tree/main/modules/Stories) and [`Category`](./tree/main/modules/Category) modules.
 
-You can find the examples of the implementation in the [Index page](./tree/master/pages/index.tsx) and [Category page](./tree/master/pages/category/[slug].tsx).
+#### `InfiniteStories`
+
+Infinite loading of data with `Load More` button. Not used in the starter theme by default but an example usage can be found
+in both [`Stories`](./tree/main/modules/Stories) and [`Category`](./tree/main/modules/Category) modules.
 
 ### Contributions
 
@@ -122,10 +145,20 @@ Everyone is welcome to contribute to this project. Feel free to open an issue if
 
 ### License
 
-Licensed under the GNU GENERAL PUBLIC LICENSE, Copyright © 2021
-
-See [LICENSE](LICENSE) for more information.
+Prezly Theme Starter is [MIT licensed](LICENSE).
 
 ---
 
-Made with ♥ by [Prezly.com](https://www.prezly.com/developers)
+Made with ♥ by [Prezly]
+
+[Prezly]: https://www.prezly.com/developers
+[Prezly SDK]: https://github.com/prezly/javascript-sdk
+[Next.js]: https://nextjs.org
+[Next.js Theme Kit]: https://github.com/prezly/theme-kit-nextjs
+[TypeScript]: https://www.typescriptlang.org
+[ESLint]: https://eslint.org
+[Prettier]: https://prettier.io
+[React Intl]: https://www.npmjs.com/package/react-intl
+[Prezly Content React Renderer]: https://www.npmjs.com/package/@prezly/content-renderer-react-js
+[Prezly Themes Translations]: https://www.npmjs.com/package/@prezly/themes-intl-messages
+[Algolia]: https://algolia.com
