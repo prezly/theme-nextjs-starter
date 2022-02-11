@@ -3,7 +3,7 @@
 Prezly Theme starter for your newsroom or blog based on Next.js 12+ framework:
 
 - Made with [TypeScript], [Prezly SDK] and [Prezly Content React Renderer].
-- Data-fetching is handled by [Next.JS Theme Kit] and [Prezly SDK].
+- Data-fetching is handled by [Next.js Theme Kit] and [Prezly SDK].
 - Multi-language is powered by [React Intl] and [Prezly Themes Translations].
 - Code-style is ensured by [ESLint] and [Prettier].
 - Search is powered by [Algolia]
@@ -25,17 +25,17 @@ As we do not want to tell you how to style your project (CSS vs Sass vs CSS-in-J
 
 ### Developer experience:
 
-* [Next.js](https://nextjs.org) with SSR, SSI or SSG option
+* [Next.js] with SSR, SSG or ISR option
 * Test/Seed data in 3 categories
-* Type checking [TypeScript](https://www.typescriptlang.org)
+* Type checking with [TypeScript]
 * Strongly typed content/entities
 
-### Built-in feature from Next.js:
+### Built-in features from Next.js:
 
 * Minify HTML & CSS
 * Live reload/Fast refresh
 * Code splitting and bundling
-* Hybrid: SSG, SSI or SSR
+* Hybrid: SSR, SSG or ISR
 * Image optimization
 
 ### Requirements
@@ -113,7 +113,7 @@ The entire application is wrapped with `NewsroomContextProvider` and `IntlProvid
 making it easy to access common objects like `newsroom`, `companyInformation`, `categories`, `languages`, `locale`
 anywhere in the component tree.
 
-For more information about these hooks please visit our [Next.JS Theme Kit].
+For more information about these hooks please visit our [Next.js Theme Kit].
 
 ### Hooks
 
@@ -145,9 +145,7 @@ Everyone is welcome to contribute to this project. Feel free to open an issue if
 
 ### License
 
-Licensed under the MIT License, Copyright © 2022 Prezly
-
-See [LICENSE](LICENSE) for more information.
+Prezly Theme Starter is [MIT licensed](LICENSE).
 
 ---
 
@@ -155,7 +153,8 @@ Made with ♥ by [Prezly]
 
 [Prezly]: https://www.prezly.com/developers
 [Prezly SDK]: https://github.com/prezly/javascript-sdk
-[Next.JS Theme Kit]: https://github.com/prezly/theme-kit-nextjs
+[Next.js]: https://nextjs.org
+[Next.js Theme Kit]: https://github.com/prezly/theme-kit-nextjs
 [TypeScript]: https://www.typescriptlang.org
 [ESLint]: https://eslint.org
 [Prettier]: https://prettier.io
