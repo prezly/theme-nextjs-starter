@@ -1,9 +1,9 @@
-# Prezly Theme Starter
+# Prezly Starter Theme
 
-Prezly Theme starter for your newsroom or blog based on Next.js 12+ framework:
+Prezly Starter Theme for your newsroom or blog based on Next.js 12+ framework:
 
 - Made with [TypeScript], [Prezly SDK] and [Prezly Content React Renderer].
-- Data-fetching is handled by [Next.js Theme Kit] and [Prezly SDK].
+- Data-fetching is handled by [Prezly Theme Kit] and [Prezly SDK].
 - Multi-language is powered by [React Intl] and [Prezly Themes Translations].
 - Code-style is ensured by [ESLint] and [Prettier].
 - Search is powered by [Algolia]
@@ -145,7 +145,7 @@ Everyone is welcome to contribute to this project. Feel free to open an issue if
 
 ### License
 
-Prezly Theme Starter is [MIT licensed](LICENSE).
+Prezly Starter Theme is [MIT licensed](LICENSE).
 
 ---
 
@@ -153,8 +153,8 @@ Made with ♥ by [Prezly]
 
 [Prezly]: https://www.prezly.com/developers
 [Prezly SDK]: https://github.com/prezly/javascript-sdk
+[Prezly Theme Kit]: https://github.com/prezly/theme-kit-nextjs
 [Next.js]: https://nextjs.org
-[Next.js Theme Kit]: https://github.com/prezly/theme-kit-nextjs
 [TypeScript]: https://www.typescriptlang.org
 [ESLint]: https://eslint.org
 [Prettier]: https://prettier.io
