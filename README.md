@@ -10,7 +10,7 @@ Prezly Starter Theme for your newsroom or blog based on Next.js 12+ framework:
 
 As we do not want to tell you how to style your project (CSS vs Sass vs CSS-in-JS vs styled components) and sure as hell do not want to force you on our preferred CSS framework **this theme does not have any styling loaded**. It is intended to be used as a boilerplate to start a new theme from.
 
-If you don't feel like starting from scratch, you can get [Prezly theme UI Kit Figma file](https://www.figma.com/community/file/1083372101078898157) and start from there.
+The good news is that you don't have to start completely from scratch. Feel free to use the [Prezly theme UI Kit Figma file](https://www.figma.com/community/file/1083372101078898157) as a design guide.
 
 ## Features
 
