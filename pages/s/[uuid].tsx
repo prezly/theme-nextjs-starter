@@ -1,5 +1,6 @@
 import {
     getNewsroomServerSideProps,
+    getPrezlyApi,
     processRequest,
     useCurrentStory,
 } from '@prezly/theme-kit-nextjs';
@@ -23,9 +24,10 @@ function StoryPreviewPage() {
 
 export const getServerSideProps: GetServerSideProps<BasePageProps> = async (context) => {
     try {
-        const { api, serverSideProps } = await getNewsroomServerSideProps(context);
+        const api = getPrezlyApi(context.req);
         const { uuid } = context.params as { uuid: string };
         const story = await api.getStory(uuid);
+        const { serverSideProps } = await getNewsroomServerSideProps(context, { story });
 
         return processRequest(context, {
             ...serverSideProps,
