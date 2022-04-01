@@ -44,13 +44,8 @@ export function useInfiniteStoriesLoading(
     const currentLocale = useCurrentLocale();
 
     const { canLoadMore, data, isLoading, loadMore, resetData } = useInfiniteLoading<Story>({
-        fetchingFn: async (nextPage: number) => {
-            const { stories } = await fetchStories(
-                nextPage,
-                pagination.pageSize,
-                category,
-                currentLocale,
-            );
+        fetchingFn: async (nextPage, pageSize) => {
+            const { stories } = await fetchStories(nextPage, pageSize, category, currentLocale);
             return stories;
         },
         initialData: initialStories,
