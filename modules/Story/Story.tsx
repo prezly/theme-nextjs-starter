@@ -1,7 +1,8 @@
 import type { ExtendedStory } from '@prezly/sdk';
 import { StoryFormatVersion } from '@prezly/sdk';
+import { StorySeo } from '@prezly/theme-kit-nextjs';
 
-import { SlateRenderer, StorySeo } from '@/components';
+import { SlateRenderer } from '@/components';
 import { Layout } from '@/modules/Layout';
 
 interface Props {
