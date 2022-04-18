@@ -10,11 +10,11 @@
     "build": "next build",
     "start": "next start",
     "check": "npm run lint && npm run typecheck",
-    "lint": "eslint . --ext .ts,.tsx",
-    "lint:fix": "eslint . --ext .ts,.tsx --fix",
+    "lint": "next lint",
+    "lint:fix": "next lint --fix",
     "prettier": "prettier --check './**/*.(js|ts|tsx)'",
     "prettier:fix": "npm run prettier -- --write --no-list-different",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit --incremental",
   },
   "dependencies": {
     "@prezly/analytics-nextjs": "^0.2.1",

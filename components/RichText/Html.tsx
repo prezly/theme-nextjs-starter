@@ -6,5 +6,5 @@ interface Props {
 }
 
 export function Html({ node }: Props) {
-    return <HtmlRenderer node={node} className={styles.htmlContent} />;
+    return <HtmlRenderer node={node} />;
 }
