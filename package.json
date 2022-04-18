@@ -14,7 +14,7 @@
     "lint:fix": "next lint --fix",
     "prettier": "prettier --check './**/*.(js|ts|tsx)'",
     "prettier:fix": "npm run prettier -- --write --no-list-different",
-    "typecheck": "tsc --noEmit --incremental",
+    "typecheck": "tsc --noEmit --incremental"
   },
   "dependencies": {
     "@prezly/analytics-nextjs": "^0.2.1",
