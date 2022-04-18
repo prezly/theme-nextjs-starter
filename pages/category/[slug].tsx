@@ -7,7 +7,7 @@ import {
 import type { GetServerSideProps } from 'next';
 import dynamic from 'next/dynamic';
 
-import { importMessages } from '@/utils';
+import { importMessages, isTrackingEnabled } from '@/utils';
 import type { BasePageProps, PaginationProps } from 'types';
 
 interface Props extends BasePageProps {
@@ -58,6 +58,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
                 currentPage: page ?? 1,
                 pageSize: DEFAULT_PAGE_SIZE,
             },
+            isTrackingEnabled: isTrackingEnabled(context),
             translations: await importMessages(localeCode),
         },
         `/category/${slug}`,

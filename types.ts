@@ -5,6 +5,7 @@ export interface AlternateLanguageLink {
 
 export interface BasePageProps {
     translations: Record<string, any>;
+    isTrackingEnabled?: boolean;
 }
 
 export interface PaginationProps {

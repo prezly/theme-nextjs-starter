@@ -3,7 +3,7 @@ import { getNewsroomServerSideProps, processRequest } from '@prezly/theme-kit-ne
 import type { GetServerSideProps } from 'next';
 import dynamic from 'next/dynamic';
 
-import { importMessages } from '@/utils';
+import { importMessages, isTrackingEnabled } from '@/utils';
 import type { BasePageProps, PaginationProps } from 'types';
 
 interface Props extends BasePageProps {
@@ -48,6 +48,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
                 currentPage: page ?? 1,
                 pageSize: PAGE_SIZE,
             },
+            isTrackingEnabled: isTrackingEnabled(context),
             translations: await importMessages(serverSideProps.newsroomContextProps.localeCode),
         },
         '/media',

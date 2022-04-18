@@ -27,6 +27,10 @@ export const getServerSideProps: GetServerSideProps<BasePageProps> = async (cont
         const api = getPrezlyApi(context.req);
         const { uuid } = context.params as { uuid: string };
         const story = await api.getStory(uuid);
+        if (!story) {
+            return { notFound: true };
+        }
+
         const { serverSideProps } = await getNewsroomServerSideProps(context, { story });
 
         return processRequest(context, {
@@ -35,6 +39,7 @@ export const getServerSideProps: GetServerSideProps<BasePageProps> = async (cont
                 ...serverSideProps.newsroomContextProps,
                 currentStory: story,
             },
+            isTrackingEnabled: false,
             translations: await importMessages(serverSideProps.newsroomContextProps.localeCode),
         });
     } catch (error) {

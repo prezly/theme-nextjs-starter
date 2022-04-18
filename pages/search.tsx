@@ -2,7 +2,7 @@ import { getNewsroomServerSideProps, processRequest } from '@prezly/theme-kit-ne
 import type { GetServerSideProps } from 'next';
 import dynamic from 'next/dynamic';
 
-import { importMessages } from '@/utils/lang';
+import { importMessages, isTrackingEnabled } from '@/utils';
 import type { BasePageProps } from 'types';
 
 const Search = dynamic(() => import('@/modules/Search'), { ssr: true });
@@ -18,6 +18,7 @@ export const getServerSideProps: GetServerSideProps<BasePageProps> = async (cont
         context,
         {
             ...serverSideProps,
+            isTrackingEnabled: isTrackingEnabled(context),
             translations: await importMessages(serverSideProps.newsroomContextProps.localeCode),
         },
         '/search',
