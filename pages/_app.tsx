@@ -9,7 +9,10 @@ import type { BasePageProps } from 'types';
 function App({ Component, pageProps }: AppProps) {
     const { newsroomContextProps, translations, ...customPageProps } = pageProps as PageProps &
         BasePageProps;
-    const { localeCode } = newsroomContextProps;
+
+    const { localeCode } = newsroomContextProps || {
+        localeCode: DEFAULT_LOCALE,
+    };
     const locale = useMemo(() => LocaleObject.fromAnyCode(localeCode), [localeCode]);
 
     // `newsroomContextProps` can be undefined, if there was error when fetching the newsroom props.
