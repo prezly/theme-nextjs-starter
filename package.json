@@ -17,7 +17,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@prezly/content-renderer-react-js": "^0.16.0",
+    "@prezly/content-renderer-react-js": "^0.17.0",
     "@prezly/sdk": "^6.21.0",
     "@prezly/slate-types": "^0.30.0",
     "@prezly/theme-kit-nextjs": "^1.7.1",
