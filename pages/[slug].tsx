@@ -50,7 +50,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         ...serverSideProps,
         newsroomContextProps: {
             ...serverSideProps.newsroomContextProps,
-            currentStory: { ...story },
+            currentStory: story,
             embedStories: await api.getEmbedStories(story),
         },
         translations: await importMessages(serverSideProps.newsroomContextProps.localeCode),
