@@ -12,7 +12,7 @@ interface Props {
 export function SlateRenderer({ nodes }: Props) {
     return (
         <div>
-            <Renderer nodes={nodes}>
+            <Renderer nodes={nodes} defaultComponents>
                 <Component match={isPlaceholderNode} component={Placeholder} />
             </Renderer>
         </div>
