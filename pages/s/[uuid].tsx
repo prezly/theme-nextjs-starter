@@ -39,7 +39,6 @@ export const getServerSideProps: GetServerSideProps<BasePageProps> = async (cont
             currentStory: story,
             embedStories: await api.getEmbedStories(story),
         },
-        isTrackingEnabled: false,
         translations: await importMessages(serverSideProps.newsroomContextProps.localeCode),
     });
 };
