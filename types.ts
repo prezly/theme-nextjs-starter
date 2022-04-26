@@ -1,8 +1,3 @@
-export interface AlternateLanguageLink {
-    href: string;
-    hrefLang: string;
-}
-
 export interface BasePageProps {
     translations: Record<string, any>;
 }
