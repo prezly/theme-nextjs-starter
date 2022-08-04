@@ -1,46 +1,53 @@
 {
   "name": "theme-nextjs-starter",
   "version": "0.1.0",
+  "engines": {
+    "node": ">= 16.x",
+    "npm": ">= 8.x"
+  },
   "devEngines": {
     "node": ">= 16.x",
-    "npm": ">= 6.x"
+    "npm": ">= 8.x"
   },
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start",
-    "check": "npm run lint && npm run typecheck",
-    "lint": "eslint . --ext .ts,.tsx",
-    "lint:fix": "eslint . --ext .ts,.tsx --fix",
-    "prettier": "prettier --check './**/*.(js|ts|tsx)'",
+    "build:analyze": "ANALYZE=true next build",
+    "lint": "next lint",
+    "lint:fix": "next lint --fix",
+    "prettier": "prettier --check './**/*.(js|ts|tsx|css)'",
     "prettier:fix": "npm run prettier -- --write --no-list-different",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit --incremental",
+    "check": "npm run lint && npm run typecheck"
   },
   "dependencies": {
-    "@prezly/content-renderer-react-js": "^0.17.0",
-    "@prezly/sdk": "^6.21.0",
-    "@prezly/slate-types": "^0.30.0",
-    "@prezly/theme-kit-nextjs": "^1.8.0",
-    "@prezly/themes-intl-messages": "^1.10.0",
-    "@prezly/uploadcare-image": "^0.3.1",
-    "algoliasearch": "^4.12.1",
-    "next": "^12.1.5",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-instantsearch-dom": "^6.22.0",
-    "react-intl": "^5.24.6",
-    "react-use": "^17.3.2"
+    "@prezly/analytics-nextjs": "1.1.7",
+    "@prezly/content-renderer-react-js": "0.22.3",
+    "@prezly/sdk": "6.25.0",
+    "@prezly/story-content-format": "0.56.2",
+    "@prezly/theme-kit-nextjs": "1.16.5",
+    "@prezly/themes-intl-messages": "1.15.0",
+    "@prezly/uploadcare": "2.3.4",
+    "@prezly/uploadcare-image": "0.3.1",
+    "@react-hookz/web": "14.7.1",
+    "algoliasearch": "4.14.2",
+    "next": "12.2.3",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-instantsearch-dom": "6.31.0",
+    "react-intl": "6.0.5"
   },
   "devDependencies": {
-    "@prezly/eslint-config": "^4.1.0",
-    "@types/node": "^16.10.2",
-    "@types/parse-data-url": "^3.0.0",
-    "@types/react": "^17.0.4",
-    "@types/react-dom": "^17.0.1",
-    "@types/react-instantsearch-dom": "^6.12.2",
-    "next-logger": "^3.0.0",
-    "prettier": "^2.5.1",
-    "typescript": "^4.5.5"
+    "@next/bundle-analyzer": "12.2.3",
+    "@prezly/eslint-config": "4.2.0",
+    "@types/node": "16.11.47",
+    "@types/react": "18.0.15",
+    "@types/react-dom": "18.0.6",
+    "@types/react-instantsearch-core": "6.26.2",
+    "@types/react-instantsearch-dom": "6.12.3",
+    "next-logger": "3.0.1",
+    "prettier": "2.7.1",
+    "typescript": "4.7.4"
   },
-  "license": "GNU GPL v3"
+  "license": "MIT"
 }
