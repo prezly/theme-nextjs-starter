@@ -1,54 +1,23 @@
 import type { Story } from '@prezly/sdk';
-import {
-    DEFAULT_PAGE_SIZE,
-    getNewsroomServerSideProps,
-    processRequest,
-} from '@prezly/theme-kit-nextjs';
-import type { GetServerSideProps } from 'next';
+import { getHomepageServerSideProps, type HomePageProps } from '@prezly/theme-kit-nextjs';
 import dynamic from 'next/dynamic';
+import type { FunctionComponent } from 'react';
 
-import { importMessages } from '@/utils/lang';
-import type { BasePageProps, PaginationProps } from 'types';
-
-interface Props extends BasePageProps {
-    stories: Story[];
-    pagination: PaginationProps;
-}
+import { importMessages } from '@/utils';
+import type { BasePageProps } from 'types';
 
 const Stories = dynamic(() => import('@/modules/Stories'), { ssr: true });
 
-function IndexPage({ stories, pagination }: Props) {
-    return <Stories stories={stories} pagination={pagination} />;
-}
+type Props = BasePageProps & HomePageProps<Story>;
 
-export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
-    const { api, serverSideProps } = await getNewsroomServerSideProps(context);
+const IndexPage: FunctionComponent<Props> = ({ stories, pagination }) => (
+    <Stories stories={stories} pagination={pagination} />
+);
 
-    const page =
-        context.query.page && typeof context.query.page === 'string'
-            ? Number(context.query.page)
-            : undefined;
-
-    const { localeCode } = serverSideProps.newsroomContextProps;
-    const { stories, storiesTotal } = await api.getStories({
-        page,
-        localeCode,
-    });
-
-    return processRequest(
-        context,
-        {
-            ...serverSideProps,
-            stories,
-            pagination: {
-                itemsTotal: storiesTotal,
-                currentPage: page ?? 1,
-                pageSize: DEFAULT_PAGE_SIZE,
-            },
-            translations: await importMessages(localeCode),
-        },
-        '/',
-    );
-};
+export const getServerSideProps = getHomepageServerSideProps<BasePageProps, Story>(
+    async (_, { newsroomContextProps }) => ({
+        translations: await importMessages(newsroomContextProps.localeCode),
+    }),
+);
 
 export default IndexPage;

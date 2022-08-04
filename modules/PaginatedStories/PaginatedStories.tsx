@@ -1,7 +1,7 @@
 import type { Story } from '@prezly/sdk';
+import type { PaginationProps } from '@prezly/theme-kit-nextjs';
 
 import { Pagination } from '@/components';
-import type { PaginationProps } from 'types';
 
 import { StoriesList } from '../StoriesList/StoriesList';
 

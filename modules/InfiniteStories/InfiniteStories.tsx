@@ -1,7 +1,5 @@
 import type { Category, Story } from '@prezly/sdk';
-import { useInfiniteStoriesLoading } from '@prezly/theme-kit-nextjs';
-
-import type { PaginationProps } from 'types';
+import { type PaginationProps, useInfiniteStoriesLoading } from '@prezly/theme-kit-nextjs';
 
 import { StoriesList } from '../StoriesList';
 

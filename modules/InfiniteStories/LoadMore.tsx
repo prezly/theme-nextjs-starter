@@ -1,9 +1,14 @@
+import translations from '@prezly/themes-intl-messages';
+import { useIntl } from 'react-intl';
+
 interface Props {
     isLoading: boolean;
     onLoadMore: () => void;
 }
 
 export function LoadMore({ isLoading, onLoadMore }: Props) {
+    const { formatMessage } = useIntl();
+
     return (
         <button
             type="button"
@@ -11,7 +16,9 @@ export function LoadMore({ isLoading, onLoadMore }: Props) {
             disabled={isLoading}
             style={{ display: 'block', marginBlock: '20px' }}
         >
-            {isLoading ? 'Please wait...' : 'Load more'}
+            {formatMessage(
+                isLoading ? translations.misc.stateLoading : translations.actions.loadMore,
+            )}
         </button>
     );
 }

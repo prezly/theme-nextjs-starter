@@ -1,10 +1,12 @@
-import { LocaleObject, useCompanyInformation, useLanguages } from '@prezly/theme-kit-nextjs';
+import { LocaleObject, useCompanyInformation } from '@prezly/theme-kit-nextjs';
 import translations from '@prezly/themes-intl-messages';
 import { FormattedMessage } from 'react-intl';
 
+import { useDisplayedLanguages } from '@/hooks';
+
 export function Footer() {
-    const languages = useLanguages();
     const companyInformation = useCompanyInformation();
+    const displayedLanguages = useDisplayedLanguages();
 
     return (
         <footer>
@@ -21,10 +23,10 @@ export function Footer() {
 
             <address>{companyInformation.address}</address>
 
-            {languages.length > 0 && (
+            {displayedLanguages.length > 0 && (
                 <>
                     <hr />
-                    {languages.map((language) => (
+                    {displayedLanguages.map((language) => (
                         <li key={language.code}>
                             <a href={`/${LocaleObject.fromAnyCode(language.code).toUrlSlug()}`}>
                                 {language.locale.native_name}
