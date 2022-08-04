@@ -1,4 +1,4 @@
-import type { PaginationProps } from 'types';
+import type { PaginationProps } from '@prezly/theme-kit-nextjs';
 
 import { getVisiblePages } from './lib/getVisiblePages';
 import { PaginationItem } from './PaginationItem';
