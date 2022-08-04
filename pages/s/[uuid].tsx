@@ -1,10 +1,6 @@
-import {
-    getNewsroomServerSideProps,
-    getPrezlyApi,
-    processRequest,
-    useCurrentStory,
-} from '@prezly/theme-kit-nextjs';
-import type { GetServerSideProps } from 'next';
+import type { ExtendedStory } from '@prezly/sdk';
+import { getStoryPreviewPageServerSideProps, useCurrentStory } from '@prezly/theme-kit-nextjs';
+import type { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 
 import { importMessages } from '@/utils';
@@ -12,35 +8,17 @@ import type { BasePageProps } from 'types';
 
 const Story = dynamic(() => import('@/modules/Story'), { ssr: true });
 
-function StoryPreviewPage() {
+const StoryPreviewPage: NextPage<BasePageProps> = () => {
     const currentStory = useCurrentStory();
 
-    if (!currentStory) {
-        return null;
-    }
-
-    return <Story story={currentStory} />;
-}
-
-export const getServerSideProps: GetServerSideProps<BasePageProps> = async (context) => {
-    const api = getPrezlyApi(context.req);
-    const { uuid } = context.params as { uuid: string };
-    const story = await api.getStory(uuid);
-    if (!story) {
-        return { notFound: true };
-    }
-
-    const { serverSideProps } = await getNewsroomServerSideProps(context, { story });
-
-    return processRequest(context, {
-        ...serverSideProps,
-        newsroomContextProps: {
-            ...serverSideProps.newsroomContextProps,
-            currentStory: story,
-            embedStories: await api.getEmbedStories(story),
-        },
-        translations: await importMessages(serverSideProps.newsroomContextProps.localeCode),
-    });
+    return <Story story={currentStory as ExtendedStory} />;
 };
+
+export const getServerSideProps = getStoryPreviewPageServerSideProps<BasePageProps>(
+    async (_, { newsroomContextProps }) => ({
+        isTrackingEnabled: false,
+        translations: await importMessages(newsroomContextProps.localeCode),
+    }),
+);
 
 export default StoryPreviewPage;
