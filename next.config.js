@@ -1,7 +1,11 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+    enabled: process.env.ANALYZE === 'true',
+});
 const { DUMMY_DEFAULT_LOCALE } = require('@prezly/theme-kit-nextjs');
 const locales = require('@prezly/theme-kit-nextjs/build/intl/localeConfig');
 
-module.exports = {
+module.exports = withBundleAnalyzer({
     async headers() {
         return [
             {
@@ -40,7 +44,7 @@ module.exports = {
         domains: ['cdn.uc.assets.prezly.com'],
     },
     eslint: {
-        dirs: ['@types', 'components', 'hooks', 'modules', 'pages', 'utils'],
+        dirs: ['@types', 'components', 'contexts', 'hooks', 'modules', 'pages', 'utils'],
     },
     i18n: {
         // These are all the locales you want to support in
@@ -53,4 +57,4 @@ module.exports = {
         // Default locale detection is disabled, since the locales would be determined by Prezly API
         localeDetection: false,
     },
-};
+});
