@@ -33,7 +33,7 @@
     "next": "12.2.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-instantsearch-dom": "6.31.1",
+    "react-instantsearch-dom": "6.32.0",
     "react-intl": "6.0.8"
   },
   "devDependencies": {
