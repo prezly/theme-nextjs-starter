@@ -30,14 +30,14 @@
     "@prezly/uploadcare-image": "0.3.1",
     "@react-hookz/web": "14.7.1",
     "algoliasearch": "4.14.2",
-    "next": "12.2.5",
+    "next": "12.3.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-instantsearch-dom": "6.32.1",
     "react-intl": "6.0.8"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "12.2.5",
+    "@next/bundle-analyzer": "12.3.0",
     "@prezly/eslint-config": "4.2.0",
     "@types/node": "16.11.58",
     "@types/react": "18.0.18",
