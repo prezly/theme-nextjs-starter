@@ -3,7 +3,7 @@ import type { Node } from '@prezly/story-content-format';
 import { StoryBookmarkNode, VariableNode } from '@prezly/story-content-format';
 import '@prezly/content-renderer-react-js/styles.css';
 
-import { Variable, StoryBookmark } from './components';
+import { StoryBookmark, Variable } from './components';
 
 interface Props {
     nodes: Node | Node[];
