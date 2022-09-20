@@ -1,13 +1,13 @@
-import type { PlaceholderNode } from '@prezly/story-content-format';
+import type { VariableNode } from '@prezly/story-content-format';
 import { useCurrentStory } from '@prezly/theme-kit-nextjs';
 
 import { StoryPublicationDate } from '@/components';
 
 interface Props {
-    node: PlaceholderNode;
+    node: VariableNode;
 }
 
-export function Placeholder({ node }: Props) {
+export function Variable({ node }: Props) {
     const currentStory = useCurrentStory();
 
     if (!currentStory) {

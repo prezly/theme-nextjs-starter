@@ -1,2 +1,2 @@
-export { Placeholder } from './Placeholder';
+export { Variable } from './Variable';
 export { StoryBookmark } from './StoryBookmark';
