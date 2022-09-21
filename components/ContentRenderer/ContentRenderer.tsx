@@ -9,7 +9,7 @@ interface Props {
     nodes: Node | Node[];
 }
 
-export function SlateRenderer({ nodes }: Props) {
+export function ContentRenderer({ nodes }: Props) {
     return (
         <div>
             <Renderer nodes={nodes} defaultComponents>

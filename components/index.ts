@@ -1,3 +1,3 @@
+export { ContentRenderer } from './ContentRenderer';
 export { Pagination } from './Pagination';
-export { SlateRenderer } from './SlateRenderer';
 export { StoryPublicationDate } from './StoryPublicationDate';

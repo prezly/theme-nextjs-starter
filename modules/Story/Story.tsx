@@ -2,7 +2,7 @@ import type { ExtendedStory } from '@prezly/sdk';
 import { StoryFormatVersion } from '@prezly/sdk';
 import { StorySeo } from '@prezly/theme-kit-nextjs';
 
-import { SlateRenderer } from '@/components';
+import { ContentRenderer } from '@/components';
 import { Layout } from '@/modules/Layout';
 
 interface Props {
@@ -22,7 +22,7 @@ export function Story({ story }: Props) {
                     <div dangerouslySetInnerHTML={{ __html: content }} />
                 )}
                 {format_version === StoryFormatVersion.SLATEJS && (
-                    <SlateRenderer nodes={JSON.parse(content)} />
+                    <ContentRenderer nodes={JSON.parse(content)} />
                 )}
             </article>
         </Layout>
