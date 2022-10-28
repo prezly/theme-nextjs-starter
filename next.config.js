@@ -1,11 +1,13 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
+import NextBundleAnalyzer from '@next/bundle-analyzer';
+import { DUMMY_DEFAULT_LOCALE } from '@prezly/theme-kit-nextjs';
+import locales from '@prezly/theme-kit-nextjs/build/intl/localeConfig';
+
+const withBundleAnalyzer = NextBundleAnalyzer({
     enabled: process.env.ANALYZE === 'true',
 });
-const { DUMMY_DEFAULT_LOCALE } = require('@prezly/theme-kit-nextjs');
-const locales = require('@prezly/theme-kit-nextjs/build/intl/localeConfig');
 
-module.exports = withBundleAnalyzer({
+export default withBundleAnalyzer({
     async headers() {
         return [
             {
