@@ -11,13 +11,13 @@ interface Props {
 }
 
 export function Gallery({ gallery }: Props) {
-    const { content, images, title, uploadcare_group_uuid } = gallery;
+    const { content, images, name, uploadcare_group_uuid } = gallery;
 
     return (
-        <Layout title={title} imageUrl={getAssetsUrl(images[0].uploadcare_image.uuid)}>
-            <h1>{title}</h1>
+        <Layout title={name} imageUrl={getAssetsUrl(images[0].uploadcare_image.uuid)}>
+            <h1>{name}</h1>
             {uploadcare_group_uuid && (
-                <a href={getUploadcareGroupUrl(uploadcare_group_uuid, title)}>
+                <a href={getUploadcareGroupUrl(uploadcare_group_uuid, name)}>
                     <FormattedMessage {...translations.actions.download} />
                 </a>
             )}

@@ -23,7 +23,7 @@ export function Galleries({ initialGalleries, pagination }: Props) {
         <Layout title={formatMessage(translations.mediaGallery.title)}>
             {galleries.map((gallery) => (
                 <Link key={gallery.uuid} href={`/media/album/${gallery.uuid}`} passHref>
-                    <a style={{ display: 'block' }}>{gallery.title}</a>
+                    <a style={{ display: 'block' }}>{gallery.name}</a>
                 </Link>
             ))}
 
