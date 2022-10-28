@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import NextBundleAnalyzer from '@next/bundle-analyzer';
-import { DUMMY_DEFAULT_LOCALE } from '@prezly/theme-kit-nextjs';
-import locales from '@prezly/theme-kit-nextjs/build/intl/localeConfig';
+// eslint-disable-next-line import/no-unresolved
+import { localeConfig } from '@prezly/theme-kit-nextjs/localeConfig';
 
 const withBundleAnalyzer = NextBundleAnalyzer({
     enabled: process.env.ANALYZE === 'true',
@@ -48,15 +48,5 @@ export default withBundleAnalyzer({
     eslint: {
         dirs: ['@types', 'components', 'contexts', 'hooks', 'modules', 'pages', 'utils'],
     },
-    i18n: {
-        // These are all the locales you want to support in
-        // your application
-        locales: [...locales, DUMMY_DEFAULT_LOCALE],
-        // This is the default locale you want to be used when visiting
-        // a non-locale prefixed path e.g. `/hello`
-        // We use Pseudo locale used for localization testing, to reliably determine if we need to fallback to the default newsroom language
-        defaultLocale: DUMMY_DEFAULT_LOCALE,
-        // Default locale detection is disabled, since the locales would be determined by Prezly API
-        localeDetection: false,
-    },
+    i18n: localeConfig,
 });
