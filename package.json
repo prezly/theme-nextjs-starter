@@ -21,7 +21,7 @@
     "check": "npm run lint && npm run typecheck"
   },
   "dependencies": {
-    "@prezly/content-renderer-react-js": "0.24.3",
+    "@prezly/content-renderer-react-js": "0.24.4",
     "@prezly/sdk": "7.12.2",
     "@prezly/story-content-format": "0.58.1",
     "@prezly/theme-kit-nextjs": "1.18.2",
