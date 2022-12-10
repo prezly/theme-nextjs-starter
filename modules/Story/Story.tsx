@@ -1,5 +1,5 @@
 import type { ExtendedStory } from '@prezly/sdk';
-import { StoryFormatVersion } from '@prezly/sdk';
+import { Story as StorySdk } from '@prezly/sdk';
 import { StorySeo } from '@prezly/theme-kit-nextjs';
 
 import { ContentRenderer } from '@/components';
@@ -18,10 +18,10 @@ export function Story({ story }: Props) {
             <article>
                 <h2>{title}</h2>
                 <h3>{subtitle}</h3>
-                {format_version === StoryFormatVersion.HTML && (
+                {format_version === StorySdk.FormatVersion.HTML && (
                     <div dangerouslySetInnerHTML={{ __html: content }} />
                 )}
-                {format_version === StoryFormatVersion.SLATEJS && (
+                {format_version === StorySdk.FormatVersion.SLATEJS && (
                     <ContentRenderer nodes={JSON.parse(content)} />
                 )}
             </article>
