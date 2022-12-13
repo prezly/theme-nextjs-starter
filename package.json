@@ -22,9 +22,9 @@
   },
   "dependencies": {
     "@prezly/content-renderer-react-js": "0.24.5",
-    "@prezly/sdk": "7.12.2",
+    "@prezly/sdk": "11.9.1",
     "@prezly/story-content-format": "0.58.1",
-    "@prezly/theme-kit-nextjs": "1.18.3",
+    "@prezly/theme-kit-nextjs": "2.1.2",
     "@prezly/themes-intl-messages": "1.15.3",
     "@prezly/uploadcare": "2.4.0",
     "@prezly/uploadcare-image": "0.3.2",
