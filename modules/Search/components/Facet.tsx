@@ -4,7 +4,7 @@ import type { RefinementListExposed, RefinementListProvided } from 'react-instan
 import { connectRefinementList } from 'react-instantsearch-dom';
 import { FormattedDate, FormattedMessage } from 'react-intl';
 
-import { FacetAttribute } from '../types';
+import { type ArrayElement, FacetAttribute } from '../types';
 
 function FacetComponent({
     attribute,
@@ -25,7 +25,7 @@ function FacetComponent({
     }, [attribute]);
 
     const getItemLabel = useCallback(
-        (item: typeof items[0]) => {
+        (item: ArrayElement<typeof items>) => {
             switch (attribute) {
                 case FacetAttribute.MONTH: {
                     const date = new Date();
