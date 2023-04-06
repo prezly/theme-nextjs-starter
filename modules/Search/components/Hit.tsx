@@ -1,5 +1,5 @@
-import type { AlgoliaStory } from '@prezly/theme-kit-nextjs';
-import { getStoryPublicationDate } from '@prezly/theme-kit-nextjs';
+import type { AlgoliaStory } from '@prezly/theme-kit-core';
+import { getStoryPublicationDate } from '@prezly/theme-kit-core';
 import Link from 'next/link';
 import type { Hit as HitType } from 'react-instantsearch-core';
 import { Highlight } from 'react-instantsearch-dom';
