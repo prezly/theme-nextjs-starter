@@ -1,6 +1,5 @@
+import { getCategoryUrl, getLocalizedCategoryData } from '@prezly/theme-kit-core';
 import {
-    getCategoryUrl,
-    getLocalizedCategoryData,
     useAlgoliaSettings,
     useCategories,
     useCurrentLocale,

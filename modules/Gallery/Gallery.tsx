@@ -1,5 +1,5 @@
 import type { NewsroomGallery } from '@prezly/sdk';
-import { getAssetsUrl, getUploadcareGroupUrl } from '@prezly/theme-kit-nextjs';
+import { getAssetsUrl, getUploadcareGroupUrl } from '@prezly/theme-kit-core';
 import translations from '@prezly/themes-intl-messages';
 import { FormattedMessage } from 'react-intl';
 

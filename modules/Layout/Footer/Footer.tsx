@@ -1,4 +1,5 @@
-import { LocaleObject, useCompanyInformation } from '@prezly/theme-kit-nextjs';
+import { LocaleObject } from '@prezly/theme-kit-core';
+import { useCompanyInformation } from '@prezly/theme-kit-nextjs';
 import translations from '@prezly/themes-intl-messages';
 import { FormattedMessage } from 'react-intl';
 
