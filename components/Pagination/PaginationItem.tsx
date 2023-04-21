@@ -36,11 +36,9 @@ export function PaginationItem({
                 pathname,
                 query: { ...query, page },
             }}
-            passHref
+            style={{ margin: '0 10px' }}
         >
-            <a style={{ margin: '0 10px' }}>
-                <span>{children}</span>
-            </a>
+            <span>{children}</span>
         </Link>
     );
 }

@@ -19,9 +19,7 @@ export function Header() {
         <header>
             <ul>
                 <li>
-                    <Link href="/" passHref>
-                        <a>Home</a>
-                    </Link>
+                    <Link href="/">Home</Link>
                 </li>
                 <li>
                     <FormattedMessage {...translations.categories.title} />
@@ -31,27 +29,22 @@ export function Header() {
                                 <Link
                                     href={getCategoryUrl(category, currentLocale)}
                                     locale={getLinkLocaleSlug()}
-                                    passHref
                                 >
-                                    <a>{getLocalizedCategoryData(category, currentLocale).name}</a>
+                                    {getLocalizedCategoryData(category, currentLocale).name}
                                 </Link>
                             </li>
                         ))}
                     </ul>
                 </li>
                 <li>
-                    <Link href="/media" passHref>
-                        <a>
-                            <FormattedMessage {...translations.mediaGallery.title} />
-                        </a>
+                    <Link href="/media">
+                        <FormattedMessage {...translations.mediaGallery.title} />
                     </Link>
                 </li>
                 {ALGOLIA_API_KEY && (
                     <li>
-                        <Link href="/search" passHref>
-                            <a>
-                                <FormattedMessage {...translations.search.title} />
-                            </a>
+                        <Link href="/search">
+                            <FormattedMessage {...translations.search.title} />
                         </Link>
                     </li>
                 )}
