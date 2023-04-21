@@ -17,10 +17,8 @@ export function Hit({ hit }: Props) {
     return (
         <div>
             <h3>
-                <Link href={`/${story.slug}`} locale={false} passHref>
-                    <a>
-                        <Highlight hit={hit} attribute="attributes.title" tagName="mark" />
-                    </a>
+                <Link href={`/${story.slug}`} locale={false}>
+                    <Highlight hit={hit} attribute="attributes.title" tagName="mark" />
                 </Link>
             </h3>
             {categories.length > 0 && (
