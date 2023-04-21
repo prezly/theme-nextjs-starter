@@ -31,15 +31,15 @@
     "@prezly/uploadcare-image": "0.3.2",
     "@react-hookz/web": "14.7.1",
     "algoliasearch": "4.17.0",
-    "next": "12.3.4",
+    "next": "13.3.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-instantsearch-dom": "6.39.1",
     "react-intl": "6.4.1"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "12.3.4",
-    "@prezly/eslint-config": "4.5.0",
+    "@next/bundle-analyzer": "13.3.0",
+    "@prezly/eslint-config": "5.0.2",
     "@types/node": "16.18.24",
     "@types/react": "18.0.37",
     "@types/react-dom": "18.0.11",
@@ -47,6 +47,7 @@
     "@types/react-instantsearch-dom": "6.12.3",
     "next-logger": "3.0.1",
     "prettier": "2.8.7",
+    "stylelint": "15.5.0",
     "typescript": "4.9.5"
   },
   "license": "MIT"
