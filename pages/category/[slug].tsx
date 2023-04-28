@@ -1,9 +1,6 @@
 import type { Story } from '@prezly/sdk';
-import {
-    getCategoryPageServerSideProps,
-    type PaginationProps,
-    useCurrentCategory,
-} from '@prezly/theme-kit-nextjs';
+import { type PaginationProps, useCurrentCategory } from '@prezly/theme-kit-nextjs';
+import { getCategoryPageServerSideProps } from '@prezly/theme-kit-nextjs/server';
 import dynamic from 'next/dynamic';
 import type { FunctionComponent } from 'react';
 
