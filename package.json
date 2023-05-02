@@ -47,7 +47,7 @@
     "@types/react-instantsearch-dom": "6.12.3",
     "next-logger": "3.0.2",
     "prettier": "2.8.8",
-    "stylelint": "15.6.0",
+    "stylelint": "15.6.1",
     "typescript": "4.9.5"
   },
   "license": "MIT"
