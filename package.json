@@ -18,9 +18,11 @@
     "prettier": "prettier --check './**/*.(js|ts|tsx|css)'",
     "prettier:fix": "npm run prettier -- --write --no-list-different",
     "typecheck": "tsc --noEmit --incremental",
-    "check": "npm run lint && npm run typecheck"
+    "check": "npm run lint && npm run typecheck",
+    "test": "npx playwright test"
   },
   "dependencies": {
+    "@playwright/test": "^1.33.0",
     "@prezly/content-renderer-react-js": "0.26.2",
     "@prezly/sdk": "15.16.0",
     "@prezly/story-content-format": "0.59.0",
@@ -45,6 +47,7 @@
     "@types/react-dom": "18.2.4",
     "@types/react-instantsearch-core": "6.26.3",
     "@types/react-instantsearch-dom": "6.12.3",
+    "dotenv": "^16.0.3",
     "next-logger": "3.0.2",
     "prettier": "2.8.8",
     "stylelint": "15.6.1",
