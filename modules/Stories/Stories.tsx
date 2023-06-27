@@ -1,7 +1,5 @@
 import type { Story } from '@prezly/sdk';
-import { type PaginationProps, useCompanyInformation } from '@prezly/theme-kit-nextjs';
-import translations from '@prezly/themes-intl-messages';
-import { useIntl } from 'react-intl';
+import { type PaginationProps } from '@prezly/theme-kit-nextjs';
 
 import { Layout } from '@/modules/Layout';
 
@@ -14,13 +12,8 @@ interface Props {
 }
 
 export function Stories({ stories, pagination }: Props) {
-    const companyInformation = useCompanyInformation();
-    const { formatMessage } = useIntl();
-
     return (
-        <Layout
-            title={`${companyInformation.name} - ${formatMessage(translations.newsroom.title)}`}
-        >
+        <Layout>
             <h1>Hello Prezly 👋</h1>
 
             {/* You can switch to infinite loading by uncommenting the `InfiniteStories` component below
