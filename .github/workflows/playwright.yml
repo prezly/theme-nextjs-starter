@@ -10,4 +10,4 @@ jobs:
       !contains(fromJSON('["Production – theme-nextjs-starter-cookbook", "Production – theme-nextjs-starter-photography", "Production – theme-nextjs-starter-preview", "Production – theme-nextjs-starter-the-good-newsroom"]'), github.event.deployment.environment)
     uses: prezly/theme-kit-js/.github/workflows/playwright.shared.yml@main
     with:
-      site-name: 'Preview Env'
+      site-name: 'The Good News Room'
