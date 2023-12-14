@@ -162,5 +162,5 @@ Made with ♥ by [Prezly]
 [Prettier]: https://prettier.io
 [React Intl]: https://www.npmjs.com/package/react-intl
 [Prezly Content React Renderer]: https://www.npmjs.com/package/@prezly/content-renderer-react-js
-[Prezly Themes Translations]: https://www.npmjs.com/package/@prezly/themes-intl-messages
+[Prezly Themes Translations]: https://www.npmjs.com/package/@prezly/theme-kit-intl
 [Algolia]: https://algolia.com

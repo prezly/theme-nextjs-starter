@@ -1,11 +1,11 @@
 import { getCategoryUrl, getLocalizedCategoryData } from '@prezly/theme-kit-core';
+import { translations } from '@prezly/theme-kit-intl';
 import {
     useAlgoliaSettings,
     useCategories,
     useCurrentLocale,
     useGetLinkLocaleSlug,
 } from '@prezly/theme-kit-nextjs';
-import translations from '@prezly/themes-intl-messages';
 import Link from 'next/link';
 import { FormattedMessage } from 'react-intl';
 

@@ -18,10 +18,10 @@ export function Story({ story }: Props) {
             <article>
                 <h2>{title}</h2>
                 <h3>{subtitle}</h3>
-                {format_version === FormatVersion.HTML && (
+                {Number(format_version) === FormatVersion.HTML && (
                     <div dangerouslySetInnerHTML={{ __html: content }} />
                 )}
-                {format_version === FormatVersion.SLATEJS && (
+                {Number(format_version) >= FormatVersion.SLATEJS && (
                     <ContentRenderer nodes={JSON.parse(content)} />
                 )}
             </article>
