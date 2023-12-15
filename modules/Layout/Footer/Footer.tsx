@@ -1,6 +1,6 @@
 import { LocaleObject } from '@prezly/theme-kit-core';
+import { translations } from '@prezly/theme-kit-intl';
 import { useCompanyInformation } from '@prezly/theme-kit-nextjs';
-import translations from '@prezly/themes-intl-messages';
 import { FormattedMessage } from 'react-intl';
 
 import { useDisplayedLanguages } from '@/hooks';
