@@ -2,12 +2,12 @@
   "name": "theme-nextjs-starter",
   "version": "0.1.0",
   "engines": {
-    "node": "^20.x",
-    "npm": "^10.x"
+    "node": "18.x",
+    "npm": "9.x"
   },
   "devEngines": {
-    "node": "^20.x",
-    "npm": "^10.x"
+    "node": "18.x",
+    "npm": "9.x"
   },
   "scripts": {
     "dev": "next",
