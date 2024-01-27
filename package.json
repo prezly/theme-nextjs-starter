@@ -42,7 +42,7 @@
   "devDependencies": {
     "@next/bundle-analyzer": "13.5.6",
     "@prezly/eslint-config": "5.2.0",
-    "@types/node": "16.18.74",
+    "@types/node": "16.18.76",
     "@types/react": "18.2.48",
     "@types/react-dom": "18.2.18",
     "@types/react-instantsearch-core": "6.26.10",
