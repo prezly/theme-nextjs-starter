@@ -46,7 +46,7 @@
     "@types/react": "18.3.18",
     "@types/react-dom": "18.3.5",
     "@types/react-instantsearch-core": "6.26.10",
-    "@types/react-instantsearch-dom": "6.12.8",
+    "@types/react-instantsearch-dom": "6.12.9",
     "dotenv": "^16.0.3",
     "next-logger": "3.0.2",
     "prettier": "2.8.8",
