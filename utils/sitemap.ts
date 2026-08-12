@@ -1,6 +1,6 @@
 import { Category, type Story } from '@prezly/sdk';
 import { getShortestLocaleCode, getUsedLanguages, LocaleObject } from '@prezly/theme-kit-core';
-import { NextContentDelivery } from '@prezly/theme-kit-nextjs/server';
+import type { NextContentDelivery } from '@prezly/theme-kit-nextjs/server';
 
 const STORY_API_PAGE_SIZE = 200;
 export const SITEMAP_STORY_PAGE_SIZE = 500;
@@ -13,6 +13,23 @@ interface SitemapUrl {
     changeFrequency: string;
     priority: string;
     alternateLinks?: Array<{ href: string; lang: string }>;
+}
+
+function escapeXml(value: string) {
+    return value
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&apos;');
+}
+
+function normalizeBasePath(basePath?: string) {
+    if (!basePath) {
+        return '';
+    }
+    const withLeadingSlash = basePath.startsWith('/') ? basePath : `/${basePath}`;
+    return withLeadingSlash.endsWith('/') ? withLeadingSlash.slice(0, -1) : withLeadingSlash;
 }
 
 export function getSitemapPageCount(totalStories: number) {
@@ -33,92 +50,9 @@ ${urls.map((url) => `  <sitemap><loc>${escapeXml(url)}</loc></sitemap>`).join('\
 </sitemapindex>`;
 }
 
-export async function buildSitemapPageXml(
-    api: ContentDeliveryClient,
-    baseUrl: string,
-    page: number,
-    basePath?: string,
-): Promise<string | null> {
-    if (!Number.isSafeInteger(page) || page < 0) {
-        return null;
-    }
-
-    const offset = page * SITEMAP_STORY_PAGE_SIZE;
-    const firstStoryPage = await api.stories({ limit: STORY_API_PAGE_SIZE, offset });
-    const totalStories = firstStoryPage.pagination.matched_records_number;
-
-    if (offset >= totalStories && page !== 0) {
-        return null;
-    }
-
-    const endOffset = Math.min(offset + SITEMAP_STORY_PAGE_SIZE, totalStories);
-    const remainingPageRequests = [];
-    for (
-        let pageOffset = offset + STORY_API_PAGE_SIZE;
-        pageOffset < endOffset;
-        pageOffset += STORY_API_PAGE_SIZE
-    ) {
-        remainingPageRequests.push(
-            api.stories({
-                limit: Math.min(STORY_API_PAGE_SIZE, endOffset - pageOffset),
-                offset: pageOffset,
-            }),
-        );
-    }
-
-    const [languages, remainingPages] = await Promise.all([
-        api.languages(),
-        Promise.all(remainingPageRequests),
-    ]);
-    const sitemap = new SitemapBuilder(baseUrl, basePath, languages);
-
-    if (page === 0) {
-        const [newsroom, categories] = await Promise.all([api.newsroom(), api.categories()]);
-        sitemap.addPageUrl('/');
-        if (newsroom.public_galleries_number > 0) {
-            sitemap.addPageUrl('/media');
-            const { galleries } = await api.galleries();
-            for (const gallery of galleries) {
-                sitemap.addPageUrl(`/media/album/${gallery.uuid}`);
-            }
-        }
-        for (const category of categories) {
-            sitemap.addCategoryUrl(category);
-        }
-    }
-
-    for (const story of firstStoryPage.stories) {
-        sitemap.addStoryUrl(story);
-    }
-    for (const storyPage of remainingPages) {
-        for (const story of storyPage.stories) {
-            sitemap.addStoryUrl(story);
-        }
-    }
-
-    return sitemap.serialize();
-}
-
-export function normalizeBaseUrl(baseUrl: string, protocol = 'https') {
-    if (/^(\/|localhost|https?:\/\/)/.test(baseUrl)) {
-        return baseUrl;
-    }
-    if (protocol.toLowerCase() === 'http') {
-        return `http://${baseUrl}`;
-    }
-    return `https://${baseUrl}`;
-}
-
-function normalizeBasePath(basePath?: string) {
-    if (!basePath) {
-        return '';
-    }
-    const withLeadingSlash = basePath.startsWith('/') ? basePath : `/${basePath}`;
-    return withLeadingSlash.endsWith('/') ? withLeadingSlash.slice(0, -1) : withLeadingSlash;
-}
-
 class SitemapBuilder {
     private readonly usedLanguages;
+
     private readonly urls: SitemapUrl[] = [];
 
     constructor(
@@ -146,7 +80,7 @@ class SitemapBuilder {
     }
 
     addPageUrl(url: string) {
-        for (const { code } of this.usedLanguages) {
+        this.usedLanguages.forEach(({ code }) => {
             this.urls.push({
                 location: this.buildUrl(url, code),
                 changeFrequency: SitemapBuilder.guessFrequency(url),
@@ -156,19 +90,19 @@ class SitemapBuilder {
                     lang: LocaleObject.fromAnyCode(language.code).toUrlSlug(),
                 })),
             });
-        }
+        });
     }
 
     addStoryUrl(story: Story) {
         const translations = new Map<string, { slug: string; culture: { code: LocaleCode } }>();
-        for (const translation of story.translations) {
+        story.translations.forEach((translation) => {
             if (
                 this.usedLanguages.some(({ code }) => code === translation.culture.code) &&
                 translation.status === 'published'
             ) {
                 translations.set(translation.culture.code, translation);
             }
-        }
+        });
         translations.set(story.culture.code, story);
 
         const url = `/${story.slug}`;
@@ -189,7 +123,7 @@ class SitemapBuilder {
         const translations = Object.values(category.i18n).filter((translation) =>
             this.usedLanguages.some(({ code }) => code === translation.locale.code),
         );
-        for (const { code } of this.usedLanguages) {
+        this.usedLanguages.forEach(({ code }) => {
             const translatedCategory = Category.translation(category, code);
             if (translatedCategory) {
                 const url = `/category/${translatedCategory.slug}`;
@@ -208,7 +142,7 @@ class SitemapBuilder {
                     }),
                 });
             }
-        }
+        });
     }
 
     serialize() {
@@ -250,11 +184,69 @@ class SitemapBuilder {
     }
 }
 
-function escapeXml(value: string) {
-    return value
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&apos;');
+export async function buildSitemapPageXml(
+    api: ContentDeliveryClient,
+    baseUrl: string,
+    page: number,
+    basePath?: string,
+): Promise<string | null> {
+    if (!Number.isSafeInteger(page) || page < 0) {
+        return null;
+    }
+
+    const offset = page * SITEMAP_STORY_PAGE_SIZE;
+    const firstStoryPage = await api.stories({ limit: STORY_API_PAGE_SIZE, offset });
+    const totalStories = firstStoryPage.pagination.matched_records_number;
+
+    if (offset >= totalStories && page !== 0) {
+        return null;
+    }
+
+    const endOffset = Math.min(offset + SITEMAP_STORY_PAGE_SIZE, totalStories);
+    const remainingStartOffset = offset + STORY_API_PAGE_SIZE;
+    const remainingPageCount = Math.max(
+        0,
+        Math.ceil((endOffset - remainingStartOffset) / STORY_API_PAGE_SIZE),
+    );
+    const remainingPageRequests = Array.from({ length: remainingPageCount }, (_, index) => {
+        const pageOffset = remainingStartOffset + index * STORY_API_PAGE_SIZE;
+        return api.stories({
+            limit: Math.min(STORY_API_PAGE_SIZE, endOffset - pageOffset),
+            offset: pageOffset,
+        });
+    });
+
+    const [languages, remainingPages] = await Promise.all([
+        api.languages(),
+        Promise.all(remainingPageRequests),
+    ]);
+    const sitemap = new SitemapBuilder(baseUrl, basePath, languages);
+
+    if (page === 0) {
+        const [newsroom, categories] = await Promise.all([api.newsroom(), api.categories()]);
+        sitemap.addPageUrl('/');
+        if (newsroom.public_galleries_number > 0) {
+            sitemap.addPageUrl('/media');
+            const { galleries } = await api.galleries();
+            galleries.forEach((gallery) => sitemap.addPageUrl(`/media/album/${gallery.uuid}`));
+        }
+        categories.forEach((category) => sitemap.addCategoryUrl(category));
+    }
+
+    firstStoryPage.stories.forEach((story) => sitemap.addStoryUrl(story));
+    remainingPages.forEach((storyPage) => {
+        storyPage.stories.forEach((story) => sitemap.addStoryUrl(story));
+    });
+
+    return sitemap.serialize();
+}
+
+export function normalizeBaseUrl(baseUrl: string, protocol = 'https') {
+    if (/^(\/|localhost|https?:\/\/)/.test(baseUrl)) {
+        return baseUrl;
+    }
+    if (protocol.toLowerCase() === 'http') {
+        return `http://${baseUrl}`;
+    }
+    return `https://${baseUrl}`;
 }
