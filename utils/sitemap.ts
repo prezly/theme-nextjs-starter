@@ -242,8 +242,14 @@ export async function buildSitemapPageXml(
 }
 
 export function normalizeBaseUrl(baseUrl: string, protocol = 'https') {
-    if (/^(\/|localhost|https?:\/\/)/.test(baseUrl)) {
+    if (/^https?:\/\//.test(baseUrl)) {
         return baseUrl;
+    }
+    if (baseUrl === '/') {
+        return 'http://localhost';
+    }
+    if (/^(localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/.test(baseUrl)) {
+        return `http://${baseUrl}`;
     }
     if (protocol.toLowerCase() === 'http') {
         return `http://${baseUrl}`;
